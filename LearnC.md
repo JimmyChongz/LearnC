@@ -24,7 +24,7 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 ```
-
+>`size_t` is an unsigned data type，對於 32-bit 的系統而言，size_t 的大小為 4 bytes，而 64-bit 的系統則為 8 bytes。(%zu is used for size_t values)
 ```c
 跳脫字元：
 \n: 換行
@@ -46,12 +46,12 @@ int main(int argc, const char * argv[]) {
     // short -> int
     short s_1 = 10;
     int i_1 = (int)s_1;
-    printf("s_1 size: %zu Bytes\ni_1 size: %zu Bytes\n", sizeof(s_1), sizeof(i_1));
+    printf("s_1 size: %u Bytes\ni_1 size: %zu Bytes\n", sizeof(s_1), sizeof(i_1));
     
     //int -> short
     int i_2 = 10;
     short s_2 = (short)i_2;
-    printf("\ni_2 size: %zu Bytes\ns_2 size: %zu Bytes\n", sizeof(i_2), sizeof(s_2));
+    printf("\ni_2 size: %u Bytes\ns_2 size: %zu Bytes\n", sizeof(i_2), sizeof(s_2));
     
     //int -> float
     int i_3 = 10;
@@ -686,9 +686,233 @@ LOOP:
 Program ended with exit code: 0
 ```
 ## function
+```c
+#include <stdio.h>
+#include <string.h>
 
-## 巨集
+void sayHi(char object[][50], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("Hi, %s.I'm your dad!\n", object[i]);
+    }
+}
 
+int main(int argc, const char * argv[]) {
+    char friends[][50] = {
+        "Jimmy Xu",
+        "Jeremy Lin",
+        "Webber Su",
+        "Jack Liu"
+    };
+    
+    int arr_size = sizeof(friends) / sizeof(char) / (sizeof(friends[0]) / sizeof(char));
+    
+    sayHi(friends, arr_size);
+    return 0;
+}
+
+//output
+Hi, Jimmy Xu.I'm your dad!
+Hi, Jeremy Lin.I'm your dad!
+Hi, Webber Su.I'm your dad!
+Hi, Jack Liu.I'm your dad!
+Program ended with exit code: 0
+```
+```c
+#include <stdio.h>
+#include <stdbool.h>
+
+bool isBigger(float a, float b){
+    return a > b;
+}
+
+int main(int argc, const char * argv[]) {
+    printf("%d\n", isBigger(10.5, 20));
+    return 0;
+}
+
+//output
+0
+Program ended with exit code: 0
+```
+## Library (header檔)
+>#include <...> 用於新增系統目錄下的header檔，而#include "..."用於新增檔案目錄底下的header檔(自創的library)。
+### 創建標頭檔和函式庫
+![截圖 2024-09-11 上午10.59.03](https://hackmd.io/_uploads/Bkttwt02C.png)
+main.c (使用library中的function)
+```c
+#include <stdio.h>
+#include "myLibrary.h"
+
+int main(int argc, const char * argv[]) {
+    char friends[][50] = {
+        "Jimmy Xu",
+        "Jeremy Lin",
+        "Webber Su",
+        "Jack Liu"
+    };
+    
+    int arr_size = sizeof(friends) / sizeof(char) / (sizeof(friends[0]) / sizeof(char));
+    sayHi(friends, arr_size);
+    
+    printf("%d\n", isBigger(10.5, 20));
+}
+```
+myLibrary.h (負責宣告有哪些function)
+```c
+#ifndef myLibrary_h
+#define myLibrary_h
+#include <stdbool.h>
+
+void sayHi(char object[][50], int size);
+bool isBigger(float a, float b);
+
+#endif /* myLibrary_h */
+```
+myLibraby.c (負責實作myLibrary.h中的function)
+```c
+#include <stdio.h>
+#include "myLibrary.h"
+
+void sayHi(char object[][50], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("Hi, %s.I'm your dad!\n", object[i]);
+    }
+}
+
+bool isBigger(float a, float b){
+    return a > b;
+}
+```
+### 靜態/動態函式庫
+靜態函式庫(static library)
+: 把Library包成一個檔案，檔案容量大。
+
+動態函式庫(dynamic library)
+: 把Library包成額外的檔案，執行時與執行檔一起執行，較省空間。
+
+![picture1](https://hackmd.io/_uploads/rkWT_ATn0.jpg)
+
+
+## 巨集(Macro) #define
+>巨集不是變數，在執行期間不會被改變。巨集在程式編譯之前就會被替換。其實就是替身。
+
+```c
+#include <stdio.h>
+
+#define MAX_SIZE 10
+#define ADD(x) (x + 1)
+#define SUB_without＿brackets(a, b) a - b
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+
+int main(int argc, const char * argv[]) {
+    char students[MAX_SIZE];
+    printf("%zu\n", sizeof(students)); // 10
+    printf("%d\n", ADD(8)); // 9
+    printf("%d\n", SUB_without＿brackets(21, 9)); // 12
+    int res = 2 * SUB_without＿brackets(20, 10) / 4; // 2 * 20 - 10 / 4 = 38
+    printf("%d\n", res); // 38
+    printf("%d\n", MAX(21, 9)); // 21
+}
+
+//output
+10
+9
+12
+38
+21
+Program ended with exit code: 0
+```
+>\## 相連符號
+```c
+#include <stdio.h>
+
+#define A(x) Value_##x
+#define B(x, y) x##y
+
+int main(int argc, const char * argv[]) {
+    int A(1) = 9;
+    int A(a) = 21;
+    printf("%d, %d\n", Value_1, Value_a);
+    
+    int B(a, 1) = 21;
+    int B(b, 1) = 9;
+    printf("%d, %d\n", a1, b1);
+}
+
+//output
+9, 21
+21, 9
+Program ended with exit code: 0
+```  
+> \# 引入字串  
+```c
+
+```
+> \ 換行要加的
+```c
+#include <stdio.h>
+
+#define COMPARE(a, b, ans) \
+if (a > b) ans = 1; \
+else if (a < b) ans = 0; \
+else ans = -1;
+
+int main(int argc, const char * argv[]) {
+    int res;
+    int a = 21;
+    int b = 9;
+    COMPARE(a, b, res);
+    printf("%d\n", res);
+}
+```
+### 巨集判斷式
+`#if` `#elif` `#else` `#endif`
+```c
+#include <stdio.h>
+
+#define SWITCH 0
+
+int main(int argc, const char * argv[]) {
+    // 反灰的部分等同於註解
+#if SWITCH == 0
+    printf("offical_mode\n");
+#elif SWITCH == 1
+    printf("develop_mode\n");
+#else
+    printf("test_mode\n");
+#endif
+}
+
+//output
+offical_mode
+Program ended with exit code: 0
+```
+`#ifdef` `#ifndef`
+```c
+#include <stdio.h>
+
+#define MAJOR "CSIE"
+
+int main(int argc, const char * argv[]) {
+    // 反灰的部分等同於註解
+#ifdef MAJOR
+    printf("You have defined MAJOR!\n");
+#else
+    printf("You haven't defined MAJOR!\n");
+#endif
+    
+#ifndef SUBJECT
+    printf("You haven't defined SUBJECT!\n");
+#else
+    printf("You have defined SUBJECT!\n");
+#endif
+}
+
+//output
+You have defined MAJOR!
+You haven't defined SUBJECT!
+Program ended with exit code: 0
+```
 ## 別名
 
 ## struct
