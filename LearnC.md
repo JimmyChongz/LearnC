@@ -1,7 +1,7 @@
 # C語言
 ## Data Types
 
-| 資料型態 | Size (Byte) |  |
+| 資料型態 | Size (Byte) | 格式 |
 | --- | --- | --- |
 | (unsigned)short | 2 | %d |
 | (unsigned)int | 4 | %d |
@@ -14,6 +14,10 @@
 | (unsigned)char | 1 | %c |
 | string | 1 * stringSize | %s |
 
+==unsigned資料型態格式為%u==
+
+![pic](https://hackmd.io/_uploads/Syly6QyaR.png)
+
 ```c
 #include <stdio.h>
 
@@ -23,6 +27,10 @@ int main(int argc, const char * argv[]) {
     printf("%zu\n", sizeof(unsigned long));
     return 0;
 }
+
+//output
+8
+Program ended with exit code: 0
 ```
 >`size_t` is an unsigned data type，對於 32-bit 的系統而言，size_t 的大小為 4 bytes，而 64-bit 的系統則為 8 bytes。(%zu is used for size_t values)
 ```c
@@ -46,12 +54,12 @@ int main(int argc, const char * argv[]) {
     // short -> int
     short s_1 = 10;
     int i_1 = (int)s_1;
-    printf("s_1 size: %u Bytes\ni_1 size: %zu Bytes\n", sizeof(s_1), sizeof(i_1));
+    printf("s_1 size: %zu Bytes\ni_1 size: %zu Bytes\n", sizeof(s_1), sizeof(i_1));
     
     //int -> short
     int i_2 = 10;
     short s_2 = (short)i_2;
-    printf("\ni_2 size: %u Bytes\ns_2 size: %zu Bytes\n", sizeof(i_2), sizeof(s_2));
+    printf("\ni_2 size: %zu Bytes\ns_2 size: %zu Bytes\n", sizeof(i_2), sizeof(s_2));
     
     //int -> float
     int i_3 = 10;
@@ -75,7 +83,23 @@ int main(int argc, const char * argv[]) {
     printf("%f overflow occur! float range is -3.4e38 ~ 3.4e38\n\n", f_3); //inf: 無窮大
 }
 ```
+```
+//output
+s_1 size: 2 Bytes
+i_1 size: 4 Bytes
 
+i_2 size: 4 Bytes
+s_2 size: 2 Bytes
+
+f_1 = 10.000000
+i_4 = 10
+
+-32768 overflow occur! short range is -32768 ~ 32767
+65521 overflow occur! unsigned short range is 0 ~ 65535
+inf overflow occur! float range is -3.4e38 ~ 3.4e38
+
+Program ended with exit code: 0
+```
 # 陣列
 
 ## Array
@@ -120,9 +144,18 @@ int main(int argc, const char * argv[]) {
     
     printf("\n");
 }
-
 ```
+```
+//output
+1 2 3 4 5 
+6 7 8 9 10 
 
+1.100000 1.200000 1.300000 
+2.100000 2.200000 2.300000 
+3.100000 3.200000 3.300000 
+
+Program ended with exit code: 0
+```
 ## String : 字元陣列
 
 ```c
@@ -141,6 +174,12 @@ int main(int argc, const char * argv[]) {
     };
     printf("%s %s %s\n", str2[0], str2[1], str2[2]);
 }
+
+//output
+13
+Hello World!
+cat dog pig
+Program ended with exit code: 0
 ```
 
 # 輸入輸出
@@ -190,9 +229,22 @@ int main(int argc, const char * argv[]) {
     // print %mf, m -> Round float number to m place.
     printf("%.4f\n", c);
 }
-
 ```
-
+```
+//output
+10
+output = 10
+11 12 13
+output = 11 12 13
+Hello World
+output = Hello
+100
+100
+                 100
+3.141592
+3.1416
+Program ended with exit code: 0
+```
 ## sscanf
 
 ### sscanf 的運作邏輯: scanf(自定義的儲存空間<string>, ”%d%f%c”, &input1, &input2, &input3)
@@ -210,6 +262,10 @@ int main(int argc, const char * argv[]) {
     sscanf(input, "%d%f%s", &input1, &input2, input3);
     printf("%d, %f, %s\n", input1, input2, input3);
 }
+
+//output
+10, 3.140000, abc
+Program ended with exit code: 0
 ```
 
 ## sprintf
@@ -227,6 +283,10 @@ int main(int argc, const char * argv[]) {
     sprintf(output, "out = %f", f_1);
     printf("%s\n", output); //印出output字串的內容
 }
+
+//output
+out = 3.140000
+Program ended with exit code: 0
 ```
 
 ## gets
@@ -253,6 +313,13 @@ int main(int argc, const char * argv[]) {
     // str[7] 會輸出 10 對應到 ASCII table 為換行鍵，即 Enter 鍵
     // 所以 str: a, b, c,  , d, e, f, \n, \0
 }
+
+//output
+輸入字串：abc def
+輸出字串：abc def
+
+f, 10, 0
+Program ended with exit code: 0
 ```
 
 ## puts
@@ -273,6 +340,14 @@ int main(int argc, const char * argv[]) {
     puts(str1);
     puts(str2);
 }
+
+\\output 
+printf的效果：
+I love coding.And you?
+puts的效果：
+I love coding.
+And you?
+Program ended with exit code: 0
 ```
 
 ## fputs
@@ -378,6 +453,11 @@ int main(int argc, const char * argv[]) {
     hex = hex & ~bit_9;
     printf("result = %x\n", hex); // 55aa
 }
+
+//output
+result = 57aa
+result = 55aa
+Program ended with exit code: 0
 ```
 # 條件運算式
     >, >=, <, <=, ==, !=, !, &&, ||
@@ -458,7 +538,19 @@ int main(int argc, const char * argv[]) {
     }
     
     return 0;
-}    
+}
+
+//output
+1 * 1 =  1    2 * 1 =  2    3 * 1 =  3    4 * 1 =  4    5 * 1 =  5    6 * 1 =  6    7 * 1 =  7    8 * 1 =  8    9 * 1 =  9    
+1 * 2 =  2    2 * 2 =  4    3 * 2 =  6    4 * 2 =  8    5 * 2 = 10    6 * 2 = 12    7 * 2 = 14    8 * 2 = 16    9 * 2 = 18    
+1 * 3 =  3    2 * 3 =  6    3 * 3 =  9    4 * 3 = 12    5 * 3 = 15    6 * 3 = 18    7 * 3 = 21    8 * 3 = 24    9 * 3 = 27    
+1 * 4 =  4    2 * 4 =  8    3 * 4 = 12    4 * 4 = 16    5 * 4 = 20    6 * 4 = 24    7 * 4 = 28    8 * 4 = 32    9 * 4 = 36    
+1 * 5 =  5    2 * 5 = 10    3 * 5 = 15    4 * 5 = 20    5 * 5 = 25    6 * 5 = 30    7 * 5 = 35    8 * 5 = 40    9 * 5 = 45    
+1 * 6 =  6    2 * 6 = 12    3 * 6 = 18    4 * 6 = 24    5 * 6 = 30    6 * 6 = 36    7 * 6 = 42    8 * 6 = 48    9 * 6 = 54    
+1 * 7 =  7    2 * 7 = 14    3 * 7 = 21    4 * 7 = 28    5 * 7 = 35    6 * 7 = 42    7 * 7 = 49    8 * 7 = 56    9 * 7 = 63    
+1 * 8 =  8    2 * 8 = 16    3 * 8 = 24    4 * 8 = 32    5 * 8 = 40    6 * 8 = 48    7 * 8 = 56    8 * 8 = 64    9 * 8 = 72    
+1 * 9 =  9    2 * 9 = 18    3 * 9 = 27    4 * 9 = 36    5 * 9 = 45    6 * 9 = 54    7 * 9 = 63    8 * 9 = 72    9 * 9 = 81    
+Program ended with exit code: 0
 ```
 ```c
 // 無窮迴圈寫法：
@@ -480,7 +572,18 @@ int main(int argc, const char * argv[]) {
     }
 
     return 0;
-}    
+}
+//output
+1 * 1 =  1    2 * 1 =  2    3 * 1 =  3    4 * 1 =  4    5 * 1 =  5    6 * 1 =  6    7 * 1 =  7    8 * 1 =  8    9 * 1 =  9    
+1 * 2 =  2    2 * 2 =  4    3 * 2 =  6    4 * 2 =  8    5 * 2 = 10    6 * 2 = 12    7 * 2 = 14    8 * 2 = 16    9 * 2 = 18    
+1 * 3 =  3    2 * 3 =  6    3 * 3 =  9    4 * 3 = 12    5 * 3 = 15    6 * 3 = 18    7 * 3 = 21    8 * 3 = 24    9 * 3 = 27    
+1 * 4 =  4    2 * 4 =  8    3 * 4 = 12    4 * 4 = 16    5 * 4 = 20    6 * 4 = 24    7 * 4 = 28    8 * 4 = 32    9 * 4 = 36    
+1 * 5 =  5    2 * 5 = 10    3 * 5 = 15    4 * 5 = 20    5 * 5 = 25    6 * 5 = 30    7 * 5 = 35    8 * 5 = 40    9 * 5 = 45    
+1 * 6 =  6    2 * 6 = 12    3 * 6 = 18    4 * 6 = 24    5 * 6 = 30    6 * 6 = 36    7 * 6 = 42    8 * 6 = 48    9 * 6 = 54    
+1 * 7 =  7    2 * 7 = 14    3 * 7 = 21    4 * 7 = 28    5 * 7 = 35    6 * 7 = 42    7 * 7 = 49    8 * 7 = 56    9 * 7 = 63    
+1 * 8 =  8    2 * 8 = 16    3 * 8 = 24    4 * 8 = 32    5 * 8 = 40    6 * 8 = 48    7 * 8 = 56    8 * 8 = 64    9 * 8 = 72    
+1 * 9 =  9    2 * 9 = 18    3 * 9 = 27    4 * 9 = 36    5 * 9 = 45    6 * 9 = 54    7 * 9 = 63    8 * 9 = 72    9 * 9 = 81    
+Program ended with exit code: 0
 ```
 ```c
 // 無窮迴圈寫法：
@@ -756,6 +859,14 @@ int main(int argc, const char * argv[]) {
     
     printf("%d\n", isBigger(10.5, 20));
 }
+
+//output
+Hi, Jimmy Xu.I'm your dad!
+Hi, Jeremy Lin.I'm your dad!
+Hi, Webber Su.I'm your dad!
+Hi, Jack Liu.I'm your dad!
+0
+Program ended with exit code: 0
 ```
 myLibrary.h (負責宣告有哪些function)
 ```c
@@ -794,14 +905,16 @@ bool isBigger(float a, float b){
 
 
 ## 巨集(Macro) #define
->巨集不是變數，在執行期間不會被改變。巨集在程式編譯之前就會被替換。其實就是替身。
+:::warning
+注意：巨集不是變數，在執行期間不會被改變。巨集在程式編譯之前就會被替換。其實就是替身。
+:::
 
 ```c
 #include <stdio.h>
 
 #define MAX_SIZE 10
 #define ADD(x) (x + 1)
-#define SUB_without＿brackets(a, b) a - b
+#define SUB_without_brackets(a, b) a - b // 括號陷阱
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 int main(int argc, const char * argv[]) {
@@ -809,9 +922,11 @@ int main(int argc, const char * argv[]) {
     printf("%zu\n", sizeof(students)); // 10
     printf("%d\n", ADD(8)); // 9
     printf("%d\n", SUB_without＿brackets(21, 9)); // 12
-    int res = 2 * SUB_without＿brackets(20, 10) / 4; // 2 * 20 - 10 / 4 = 38
-    printf("%d\n", res); // 38
     printf("%d\n", MAX(21, 9)); // 21
+
+    // 括號陷阱
+    int res = 2 * SUB_without＿brackets(20, 10) / 4; // 2 * 20 - 10 / 4 = 38 
+    printf("%d\n", res); // 38
 }
 
 //output
@@ -846,7 +961,18 @@ Program ended with exit code: 0
 ```  
 > \# 引入字串  
 ```c
+#include <stdio.h>
 
+#define A(x) #x
+
+int main(int argc, const char * argv[]) {
+    char str[] = A(Hello World!);
+    printf("%s\n", str);
+}
+
+//output
+Hello World!
+Program ended with exit code: 0
 ```
 > \ 換行要加的
 ```c
@@ -864,6 +990,10 @@ int main(int argc, const char * argv[]) {
     COMPARE(a, b, res);
     printf("%d\n", res);
 }
+
+//output
+1
+Program ended with exit code: 0
 ```
 ### 巨集判斷式
 `#if` `#elif` `#else` `#endif`
@@ -914,13 +1044,423 @@ You haven't defined SUBJECT!
 Program ended with exit code: 0
 ```
 ## 別名
+>就是把資料型別重新取名字
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+typedef unsigned char uint8; //char -> 1 byte -> 8 bits
+typedef unsigned short uint16; // short -> 2 bytes -> 16 bits
+typedef unsigned int uint32; // int -> 4 btyes -> 32 bits
+typedef unsigned long long uint64; // long long -> 8 bytes -> 64 bits
+typedef char* String; // 字元陣列
+
+#define STRING_COPY(s, x) strcpy(s, #x)
+
+int main(int argc, const char * argv[]) {
+    uint8 a = 255;
+    printf("uint8_MAX = %u\n", a);
+    uint16 b = 65535;
+    printf("uint16_MAX = %u\n", b);
+    uint32 c = 4294967295;
+    printf("uint32_MAX = %u\n", c);
+    uint64_t d = 9223372036854775807;
+    printf("uint64_MAX = %llu\n", d);
+    
+    String s = (String)malloc(50);
+    STRING_COPY(s, Hello World!); // strcpy(s, "Hello World!");
+    printf("%s\n", s);
+}
+
+//output
+uint8_MAX = 255
+uint16_MAX = 65535
+uint32_MAX = 4294967295
+uint64_MAX = 9223372036854775807
+Hello World!
+Program ended with exit code: 0
+```
 ## struct
+### struct 宣告、初始化 (assignment)
 
+```C
+#include <stdio.h>
+
+struct Student {
+    char name[50];
+    char major[30];
+    int age;
+};
+
+void show_student(struct Student student) {
+    printf("Name: %s\n", student.name);
+    printf("Major: %s\n", student.major);
+    printf("Age: %d\n", student.age);
+}
+
+int main(int argc, const char * argv[]) {
+    struct Student Jimmy = {"Jimmy", "Computer Science", 22}; // struct init
+    show_student(Jimmy);
+    printf("------------------------------\n");
+    
+    // 對 struct 單一元素初始化
+    struct Student Jeremy = {.name = "Jeremy"}; 
+    show_student(Jeremy);
+}
+
+//output
+Name: Jimmy
+Major: Computer Science
+Age: 22
+------------------------------
+Name: Jeremy
+Major:
+Age: 0
+Program ended with exit code: 0
+```
+### struct 巢狀結構：struct 裡再放 struct
+```c
+#include <stdio.h>
+#include <string.h>
+
+struct Student {
+    char name[50];
+    char major[30];
+    int age;
+};
+
+struct School {
+    char name[10];
+    float PR;
+    struct Student student;
+};
+
+void show_school(struct School school) {
+    printf("School: %s\n", school.name);
+    printf("PR: %f\n", school.PR);
+    printf("Student: %s\n", school.student.name);
+    printf("Major: %s\n", school.student.major);
+    printf("Age: %d\n", school.student.age);
+}
+
+int main(int argc, const char * argv[]) {
+    struct School NCKU = {"NCKU", 91.5, {"Jimmy", "Computer Science", 22}}; // struct init
+    show_school(NCKU);
+    /*NCKU.student.name = "Jeremy";*/ // error
+    strcpy(NCKU.student.name, "Jeremy");
+    printf("-------------------------\n");
+    show_school(NCKU);
+}
+
+//output
+School: NCKU
+PR: 91.500000
+Student: Jimmy
+Major: Computer Science
+Age: 22
+-------------------------
+School: NCKU
+PR: 91.500000
+Student: Jeremy
+Major: Computer Science
+Age: 22
+Program ended with exit code: 0
+```
+:::warning
+注意：字串只能在初始化時用assign的方式賦值，否則皆須用strcpy()來更改。
+:::
+### struct 簡寫
+```c
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    char name[50];
+    char major[30];
+    int age;
+} Student;
+
+typedef struct {
+    char name[10];
+    float PR;
+    Student student;
+} School;
+
+int main(int argc, const char * argv[]) {
+    School NCKU = {"NCKU", 91.5, {"Jimmy GAY", "Computer Science", 22}}; // struct init
+}
+
+```
+### struct size 計算
+:::info
+Compiler為了效能考量，會自動做最佳化，也就是資料對齊。
+
+步驟：
+
+1. 從 struct 中選出最大的型別之 size 為單位。
+2. struct 由上而下擺放。
+3. 剩餘空間補好補滿。
+:::
+```c
+#include <stdio.h>
+
+typedef struct {
+    int a;
+    char b;
+    char c;
+} Size1;
+
+typedef struct {
+    char b;
+    int a;
+    char c;
+} Size2;
+
+int main(int argc, const char * argv[]) {
+    printf("Size1: %zu bytes\nSize2: %zu bytes\n", sizeof(Size1), sizeof(Size2));
+}
+
+//output
+Size1: 8 bytes
+Size2: 12 bytes
+Program ended with exit code: 0
+```
+![截圖 2024-09-15 上午9.27.30](https://hackmd.io/_uploads/Bymzun760.png)
+
+```c
+#include <stdio.h>
+
+typedef struct {
+    char b;
+    char c;
+    double a;
+} Size3;
+
+typedef struct {
+    char b;
+    double a;
+    char c;
+} Size4;
+
+int main(int argc, const char * argv[]) {
+    printf("Size3: %zu bytes\nSize4: %zu bytes\n", sizeof(Size3), sizeof(Size4));
+}
+
+//output
+Size3: 16 bytes
+Size4: 24 bytes
+Program ended with exit code: 0
+```
+![截圖 2024-09-15 上午9.33.08](https://hackmd.io/_uploads/SySPKnQpA.png =50%x)![截圖 2024-09-15 上午9.33.43](https://hackmd.io/_uploads/BJ8tYhXTR.png =50%x)
+
+## BitFields
+```c
+#include <stdio.h>
+
+typedef struct{
+    unsigned char bit0: 1; // 控制 1 個 bit
+    unsigned char bit1: 1;
+    unsigned char bit2: 1;
+    unsigned char bit3: 1;
+    unsigned char bit4: 1;
+    unsigned char bit5: 1;
+    unsigned char bit6: 1;
+    unsigned char bit7: 1;
+} BitFieldsChar;
+
+int main(int argc, const char * argv[]) {
+    // 對 char_8 的每一個 bit 初始化
+    BitFieldsChar char_8 = {0, 0, 0, 0, 0, 0, 0, 0};
+
+    // 將第 4 個 bit 設成 1 (即 char_8 -> 00001000 = 8)
+    char_8.bit3 = 1;
+    printf("%d\n", *((unsigned char*)&char_8));
+}
+
+//output
+8
+Program ended with exit code: 0
+```
 ## union
+:::info
+語法與 struct 相同，但運作邏輯不同。union 的記憶體是共用的。如下圖所示：![截圖 2024-09-15 上午10.36.32](https://hackmd.io/_uploads/ry6EOTXa0.png)
+因此，不論初始化 union 中的哪一個元素，都**只會有一個元素被儲存**，使 union 能夠**支援多種不同的資料型別(多型)**。
 
+:::
+```c
+#include <stdio.h>
+
+typedef union{
+    int a;
+    float b;
+    char c;
+} Sample;
+
+int main(int argc, const char * argv[]) {
+    Sample s = {65, 15.3, 'a'};
+    printf("%d %f %c\n", s.a, s.b, s.c);
+}
+
+//output
+65 0.000000 A
+Program ended with exit code: 0
+```
+
+### union size 計算
+:::info
+取 union 中 size 最大的元素作為 union 的 size。
+:::
+```c
+#include <stdio.h>
+
+typedef union{
+    int a; // 4 bytes
+    float b; // 4 bytes
+    char c; // 1 bytes
+} Size1; // -> 4 bytes
+
+typedef union{
+    int a; // 4 bytes
+    double b; // 8 bytes
+    char c; // 1 bytes
+} Size2; // -> 8 bytes
+
+int main(int argc, const char * argv[]) {
+    printf("Size1 = %zu\nSize2 = %zu\n", sizeof(Size1), sizeof(Size2));
+}
+
+//output
+Size1 = 4
+Size2 = 8
+Program ended with exit code: 0
+```
+
+### Union 實現多型
+```c
+#include <stdio.h>
+#include <string.h>
+
+typedef union{
+    int a;
+    float b;
+    char c[20];
+} Polymorphism; // -> Size = 20 bytes
+
+int main(int argc, const char * argv[]) {
+    Polymorphism p;
+    p.a = 10;
+    printf("%d\n", p.a);
+    
+    p.b = 15.3;
+    printf("%f\n", p.b);
+    
+    strcpy(p.c, "Hello World!");
+    printf("%s\n", p.c);
+}
+
+//output
+10
+15.300000
+Hello World!
+Program ended with exit code: 0
+```
+### Union 應用
+#### 控制 Byte
+```c
+#include <stdio.h>
+#include <string.h>
+
+typedef union{
+    unsigned int total;
+    char detail[4]; // id, majorNum, score, clubNum
+} Student; // Size -> 4 Bytes
+
+int main(int argc, const char * argv[]) {
+    Student Jimmy;
+    Jimmy.detail[0] = 9;
+    Jimmy.detail[1] = 21;
+    Jimmy.detail[2] = 90;
+    Jimmy.detail[3] = 7;
+    printf("%d\n", Jimmy.total);
+}
+
+//output
+123344137
+Program ended with exit code: 0
+```
+![75B1C348-E98B-4833-87F2-F72261804771_1_201_a](https://hackmd.io/_uploads/rJJDv0XTR.jpg)
+
+#### union + struct 控制 Byte
+```c
+#include <stdio.h>
+#include <string.h>
+
+typedef union{
+    unsigned int total;
+    struct {
+        char id;
+        char majorNum;
+        char score;
+        char clubNum;
+    };
+} Student; // Size -> 4 Bytes
+
+int main(int argc, const char * argv[]) {
+    Student Jimmy;
+    Jimmy.id = 9;
+    Jimmy.majorNum = 21;
+    Jimmy.score = 90;
+    Jimmy.clubNum = 7;
+    printf("%d\n", Jimmy.total);
+}
+
+//output
+123344137
+Program ended with exit code: 0
+```
+
+#### union + struct 控制 Bits
+```c
+#include <stdio.h>
+#include <string.h>
+
+typedef union {
+    char header;
+    struct {
+        unsigned char bit0: 1;
+        unsigned char bit1: 1;
+        unsigned char bit2: 1;
+        unsigned char bit3: 1;
+        unsigned char bit4: 1;
+        unsigned char bit5: 1;
+        unsigned char bit6: 1;
+        unsigned char bit7: 1;
+    };
+} ControlBits;
+
+int main(int argc, const char * argv[]) {
+    ControlBits cb;
+    cb.header = 0; // init
+    
+//    cb.header |= 0x01 << 3;
+    cb.bit3 = 1;
+    printf("pull high bit3 -> %d\n", *((unsigned char*)&cb.header));
+    
+//    cb.header &= ~(0x01 << 3);
+    cb.bit3 = 0;
+    printf("then, pull down bit3 -> %d\n", *((unsigned char*)&cb.header));
+}
+
+//output
+pull high bit3 -> 8
+then, pull down bit3 -> 0
+Program ended with exit code: 0
+```
 ## enum
 
 ## pointer
+>指標大小: 4bytes(電腦為32bits) or 8bytes(電腦為64bits) ，不論甚麼型態指標皆同樣size e.g. sizeof(char*) == sizeof(int*) == sizeof(double*)
 
-##
+### 記憶體配置
+> malloc 創造出的空間會存放在 Heap 直到被 free() 該空間才會被釋放。另外，free只能使用在Heap區的資料
