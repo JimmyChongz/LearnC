@@ -1,4 +1,4 @@
-# C語言
+# C語言基礎
 ## Data Types
 
 | 資料型態 | Size (Byte) | 格式 |
@@ -14,7 +14,7 @@
 | (unsigned)char | 1 | %c |
 | string | 1 * stringSize | %s |
 
-==unsigned資料型態格式為%u==
+==unsigned 資料型態格式為%u==
 
 ![pic](https://hackmd.io/_uploads/Syly6QyaR.png)
 
@@ -788,7 +788,7 @@ LOOP:
 5
 Program ended with exit code: 0
 ```
-## function
+# Function
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -837,9 +837,9 @@ int main(int argc, const char * argv[]) {
 0
 Program ended with exit code: 0
 ```
-## Library (header檔)
+# Library (header檔)
 >#include <...> 用於新增系統目錄下的header檔，而#include "..."用於新增檔案目錄底下的header檔(自創的library)。
-### 創建標頭檔和函式庫
+## 創建標頭檔和函式庫
 ![截圖 2024-09-11 上午10.59.03](https://hackmd.io/_uploads/Bkttwt02C.png)
 main.c (使用library中的function)
 ```c
@@ -894,7 +894,7 @@ bool isBigger(float a, float b){
     return a > b;
 }
 ```
-### 靜態/動態函式庫
+## 靜態/動態函式庫
 靜態函式庫(static library)
 : 把Library包成一個檔案，檔案容量大。
 
@@ -904,7 +904,7 @@ bool isBigger(float a, float b){
 ![picture1](https://hackmd.io/_uploads/rkWT_ATn0.jpg)
 
 
-## 巨集(Macro) #define
+# 巨集(Macro) #define
 :::warning
 注意：巨集不是變數，在執行期間不會被改變。巨集在程式編譯之前就會被替換。其實就是替身。
 :::
@@ -995,7 +995,7 @@ int main(int argc, const char * argv[]) {
 1
 Program ended with exit code: 0
 ```
-### 巨集判斷式
+## 巨集判斷式
 `#if` `#elif` `#else` `#endif`
 ```c
 #include <stdio.h>
@@ -1043,7 +1043,7 @@ You have defined MAJOR!
 You haven't defined SUBJECT!
 Program ended with exit code: 0
 ```
-## 別名
+# 別名 typedef
 >就是把資料型別重新取名字
 ```c
 #include <stdio.h>
@@ -1081,7 +1081,7 @@ uint64_MAX = 9223372036854775807
 Hello World!
 Program ended with exit code: 0
 ```
-## struct
+# 結構體 struct
 ### struct 宣告、初始化 (assignment)
 
 ```C
@@ -1119,7 +1119,7 @@ Major:
 Age: 0
 Program ended with exit code: 0
 ```
-### struct 巢狀結構：struct 裡再放 struct
+## struct 巢狀結構：struct 裡再放 struct
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -1170,7 +1170,7 @@ Program ended with exit code: 0
 :::warning
 注意：字串只能在初始化時用assign的方式賦值，否則皆須用strcpy()來更改。
 :::
-### struct 簡寫
+## struct 簡寫
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -1192,7 +1192,7 @@ int main(int argc, const char * argv[]) {
 }
 
 ```
-### struct size 計算
+## struct size 計算
 :::info
 Compiler為了效能考量，會自動做最佳化，也就是資料對齊。
 
@@ -1254,7 +1254,7 @@ Program ended with exit code: 0
 ```
 ![截圖 2024-09-15 上午9.33.08](https://hackmd.io/_uploads/SySPKnQpA.png =50%x)![截圖 2024-09-15 上午9.33.43](https://hackmd.io/_uploads/BJ8tYhXTR.png =50%x)
 
-## BitFields
+# BitFields
 ```c
 #include <stdio.h>
 
@@ -1273,7 +1273,7 @@ int main(int argc, const char * argv[]) {
     // 對 char_8 的每一個 bit 初始化
     BitFieldsChar char_8 = {0, 0, 0, 0, 0, 0, 0, 0};
 
-    // 將第 4 個 bit 設成 1 (即 char_8 -> 00001000 = 8)
+    // 將第 4 個 bit 設成 1 (即 char_8 -> 000010002 = 8)
     char_8.bit3 = 1;
     printf("%d\n", *((unsigned char*)&char_8));
 }
@@ -1282,7 +1282,7 @@ int main(int argc, const char * argv[]) {
 8
 Program ended with exit code: 0
 ```
-## union
+# 共用體 union
 :::info
 語法與 struct 相同，但運作邏輯不同。union 的記憶體是共用的。如下圖所示：![截圖 2024-09-15 上午10.36.32](https://hackmd.io/_uploads/ry6EOTXa0.png)
 因此，不論初始化 union 中的哪一個元素，都**只會有一個元素被儲存**，使 union 能夠**支援多種不同的資料型別(多型)**。
@@ -1307,7 +1307,7 @@ int main(int argc, const char * argv[]) {
 Program ended with exit code: 0
 ```
 
-### union size 計算
+## union size 計算
 :::info
 取 union 中 size 最大的元素作為 union 的 size。
 :::
@@ -1336,7 +1336,7 @@ Size2 = 8
 Program ended with exit code: 0
 ```
 
-### Union 實現多型
+## Union 實現多型
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -1365,8 +1365,8 @@ int main(int argc, const char * argv[]) {
 Hello World!
 Program ended with exit code: 0
 ```
-### Union 應用
-#### 控制 Byte
+## Union 應用
+### 控制 Byte
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -1391,7 +1391,7 @@ Program ended with exit code: 0
 ```
 ![75B1C348-E98B-4833-87F2-F72261804771_1_201_a](https://hackmd.io/_uploads/rJJDv0XTR.jpg)
 
-#### union + struct 控制 Byte
+### union + struct 控制 Byte
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -1420,7 +1420,7 @@ int main(int argc, const char * argv[]) {
 Program ended with exit code: 0
 ```
 
-#### union + struct 控制 Bits
+### union + struct 控制 Bits
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -1457,10 +1457,457 @@ pull high bit3 -> 8
 then, pull down bit3 -> 0
 Program ended with exit code: 0
 ```
-## enum
+# 枚舉 enum
+:::info
+程式碼要盡量避免使用缺乏解釋或命名的數值，又稱Magic Number，而 enum 通常就是用來取代 Magic Number，目的是為了**增加程式碼的可讀性**。
+:::
+```c
+#include <stdio.h>
 
-## pointer
->指標大小: 4bytes(電腦為32bits) or 8bytes(電腦為64bits) ，不論甚麼型態指標皆同樣size e.g. sizeof(char*) == sizeof(int*) == sizeof(double*)
+typedef enum {
+    Monday, // 0
+    Tuesday, // 1
+    Wednesday, // 2
+    Thursday = 10, // 以下的枚舉會從 10 開始累加
+    Friday, // 11
+    Saturday, // 12
+    Sunday, // 13
+} DAY;
 
-### 記憶體配置
-> malloc 創造出的空間會存放在 Heap 直到被 free() 該空間才會被釋放。另外，free只能使用在Heap區的資料
+int main(int argc, const char * argv[]) {
+    DAY today = Sunday;
+    printf("Today is Sunday: %d\n", today);
+    
+    printf("%d\n", Wednesday);
+    printf("%d\n", Thursday);
+    printf("%d\n", Friday);
+}
+
+//output
+Today is Sunday: 13
+2
+10
+11
+Program ended with exit code: 0
+```
+```c
+#include <stdio.h>
+
+typedef enum {
+    Monday, // 0
+    Tuesday, // 1
+    Wednesday, // 2
+    Thursday, // 3
+    Friday, // 4
+    Saturday, // 5
+    Sunday, // 6
+    
+    MAX, // 7 統計共有多少枚舉
+} DAY;
+
+int main(int argc, const char * argv[]) {
+    char TODO[][30] = {
+        "go swimming",
+        "play basketball",
+        "play volleyball",
+        "play piano",
+        "go hiking",
+        "go on a trip",
+        "go camping"
+    };
+    
+    DAY today = Sunday;
+    printf("Today: %s\n", TODO[today]);
+    
+    for (int i = 0; i < MAX; i++) {
+        printf("%s\n", TODO[i]);
+    }
+}
+
+//output
+Today: go camping
+go swimming
+play basketball
+play volleyball
+play piano
+go hiking
+go on a trip
+go camping
+Program ended with exit code: 0
+```
+
+# 指標 pointer
+:::info
+指標大小: 4bytes(電腦為32bits) or 8bytes(電腦為64bits) ，不論甚麼型態指標皆同樣size e.g. sizeof(char*) == sizeof(int*) == sizeof(double*)
+:::
+
+## 記憶體配置
+
+![截圖 2024-09-16 上午9.36.24](https://hackmd.io/_uploads/rJNCoWr6A.png)
+
+## & : 取址運算子 、 * : 宣告及初始化指標/取值運算子
+
+```c
+#include <stdio.h>
+
+int a = 1; // global variable
+
+void foo(void) {
+    static int b = 9; // static variable
+    int c = 21; // local variable
+    
+    int* a_ptr = &a; // 指標 a_ptr 指向 a 的位址
+    int* b_ptr = &b;
+    int* c_ptr = &c;
+    
+    printf("%p %p %p\n", a_ptr, b_ptr, c_ptr); // 印出指標指向的位址
+    printf("%p %p %p\n", &a, &b, &c); // 印出 a b c 變數對應的位址
+    
+    printf("%d %d %d\n", *a_ptr, *b_ptr, *c_ptr); // 印出指標所指位址中的值
+    (*a_ptr) ++; // a++;
+    (*b_ptr) ++; // b++;
+    (*c_ptr) ++; // c++;
+    printf("%d %d %d\n", *a_ptr, *b_ptr, *c_ptr);
+}
+
+int main(int argc, const char * argv[]) {
+    foo();
+}
+
+// output
+0x100008000 0x100008004 0x16fdff2bc
+0x100008000 0x100008004 0x16fdff2bc
+1 9 21
+2 10 22
+Program ended with exit code: 0
+```
+
+## Swap 函式
+```c
+#include <stdio.h>
+
+void swap(int* a, int* b) { 
+    int tmp = *a; // 將位址 a 中的值取出存入 tmp 中
+    *a = *b; // 再將位址 b 中的值存入位址 a 中
+    *b = tmp; // 最後，將 tmp 的值存入位址 b 中
+}
+
+int main(int argc, const char * argv[]) {
+    int a = 9;
+    int b = 21;
+    printf("Before: a = %d, b = %d\n", a, b);
+    swap(&a, &b); // 傳入a, b的位址
+    printf("After: a = %d, b = %d\n", a, b);
+}
+
+//output
+Before: a = 9, b = 21
+After: a = 21, b = 9
+Program ended with exit code: 0
+```
+## Pointer size 計算
+:::info
+無論指標的型別，其 size 皆為 8 bytes(64-bit OS) or 4 bytes(32-bit OS)
+:::
+```c
+#include <stdio.h>
+
+int main(int argc, const char * argv[]) {
+    printf("%zu %zu %zu\n", sizeof(int*), sizeof(char*), sizeof(double*));
+}
+
+//output
+8 8 8
+Program ended with exit code: 0
+```
+
+## 動態記憶體配置
+:::info
+malloc() 創造出的空間會存放在 Heap，直到執行 free() 後該空間才會被釋放。另外，free() 只能對儲存在 Heap 區的資料使用。
+:::
+### malloc()
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, const char * argv[]) {
+    int* pi; // 宣告整數指標 pi
+    pi = (int*)malloc(sizeof(int)); // pi 指向新配置的動態記憶體位址
+    *pi = 5; // 於動態記憶體位址中存入5
+
+    printf("pi指標存放的記憶體位址：%p\npi動態配置的記憶體位址(即pi的內容)：%p\npi指向之記憶體位址中的內容為：%d\n", &pi, pi, *pi);
+}
+
+//output
+pi指標存放的位址：0x16fdff2c8
+pi動態配置的位址(即pi的內容)：0x6000021940e0
+pi指向之記憶體位址中的內容為：5
+Program ended with exit code: 0
+```
+:::danger
+記憶體內容如下所示：
+| 記憶體位址 | 存放的內容 | 記憶體區塊 |
+| --- | --- | --- |
+| 0x6000021940e0 | 5 | Heap |
+| 0x16fdff2c8 | 0x6000021940e0 | Stack |
+:::
+
+### free()
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, const char * argv[]) {
+    int* pi; // 宣告整數指標 pi
+    pi = (int*)malloc(sizeof(int)); // pi 指向新配置的動態記憶體位址
+    *pi = 5; // 於動態記憶體位址中存入5
+    printf("pi指標存放的記憶體位址：%p\tpi動態配置的記憶體位址(即pi的內容)：%p\tpi指向之記憶體位址中的內容為：%d\t", &pi, pi, *pi);
+    
+    // 釋放 pi 所指向的記憶體空間
+    free(pi);
+    printf("pi指標存放的記憶體位址：%p\tpi動態配置的記憶體位址(即pi的內容)：%p\tpi指向之記憶體位址中的內容為：%d\t", &pi, pi, *pi);
+}
+
+// output
+pi指標存放的記憶體位址：0x16fdff2c8 pi動態配置的記憶體位址(即pi的內容)：0x600000668060 pi指向之記憶體位址中的內容為：5
+pi指標存放的記憶體位址：0x16fdff2c8 pi動態配置的記憶體位址(即pi的內容)：0x600000668060 pi指向之記憶體位址中的內容為：710836320
+Program ended with exit code: 0
+```
+:::danger
+可以發現，雖然 pi 仍指向原本存放 5 的記憶體位址，但其內容已經被存入其他數值了！(被作業系統視為已釋放的記憶體區塊)
+| 記憶體位址 | 存放的內容 | 記憶體區塊 |
+| --- | --- | --- |
+| 0x600000668060 | 710836320 | Heap |
+| 0x16fdff2c8 | 0x600000668060 | Stack |
+:::
+
+### 常見問題 -- 記憶體洩漏 (Memory leak)
+:::info
+發生原因：因為程式在動態分配記憶體後沒有正確地釋放它。
+
+在使用 malloc、calloc 或 realloc 等函數分配記憶體時，會得到一個指向某記憶體區域的指標。如果這個指針在使用過程中被覆蓋掉，且原本的記憶體區域沒有被釋放，那麼這部分記憶體就會變成「失去指標的記憶體」，即稱記憶體洩漏。
+:::
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, const char * argv[]) {
+    // 第一次分配
+    int* pi = (int*)malloc(sizeof(int)); 
+
+    // 第二次分配，第一次分配的記憶體現在已經沒有指標指向它了
+    pi = (int*)malloc(sizeof(int)); 
+
+    free(pi); // 只會釋放第二次分配的記憶體，第一次分配的記憶體依然還存在，這就是記憶體洩漏。
+}
+```
+### 常見問題 -- 非法記憶體存取 (segment fault)
+#### 存取已被釋放的記憶體空間
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, const char * argv[]) {
+    int* pi = (int*)malloc(sizeof(int));
+    *pi = 5;
+    free(pi);
+    *pi = 10; // pi 指向的記憶體空間已被釋放，但又在存取該記憶體空間。
+}
+```
+#### 避免存取已被釋放的記憶體空間之方法
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, const char * argv[]) {
+    int* pi = NULL;
+    if (pi == NULL) { // 若 pi 尚未指向任何記憶體空間
+        pi = (int*)malloc(sizeof(int)); // 才 malloc 記憶體空間給 pi
+    }
+    
+    *pi = 5;
+    
+    if (pi != NULL) { // 若尚未釋放 pi 所指向之記憶體空間
+        free(pi); // 則釋放 pi 所指向之記憶體空間
+        pi = NULL;
+    }
+}
+```
+
+### 常見問題 -- 全域指標與靜態指標初始化問題
+:::info
+全域指標與靜態指標是無法直接初始化的，要先將指標指派為NULL，再初始化。另外，全域指標只能在函數中指派。
+:::
+#### 全域指標、靜態指標的初始化與釋放 (雙重指標)
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int* global = NULL;
+
+void pointer_init(int** p) {
+    if (*p == NULL) {
+        *p = (int*)malloc(sizeof(int));
+    }
+    printf("pointer_address: %p\n", *p);
+}
+
+void pointer_free(int** p) {
+    if (*p != NULL && p != NULL) {
+        free(*p);
+        *p = NULL;
+    }
+    printf("pointer_address: %p\n", *p);
+}
+
+int main(int argc, const char * argv[]) {
+    pointer_init(&global);
+    pointer_init(&global); // 與第一次init的位址一樣
+    pointer_free(&global);
+    static int* s_pointer = NULL;
+    pointer_init(&s_pointer);
+    pointer_init(&s_pointer); // 與第一次init的位址一樣
+    pointer_free(&s_pointer);
+}
+
+//output
+pointer_address: 0x600000e94080
+pointer_address: 0x600000e94080
+pointer_address: 0x0
+pointer_address: 0x600000e94080
+pointer_address: 0x600000e94080
+pointer_address: 0x0
+Program ended with exit code: 0
+```
+
+## 指標與陣列
+:::info
+陣列名稱即為指向該陣列首位元素之指標。
+:::
+### 一維陣列
+```c
+#include <stdio.h>
+
+int main(int argc, const char * argv[]) {
+    int arr[] = {1, 2, 3, 4, 5};
+    // arr[1] 即 *(arr + 1)
+    printf("%d\n", arr[1]);
+    printf("%d\n", *(arr + 1));
+    
+    // &arr[1] 即 arr + 1
+    printf("%p\n", &arr[1]);
+    printf("%p\n", arr + 1);
+    
+    int* arr_ptr = arr;
+    for (int i = 0; i < 5; i++) {
+        printf("%d, ", *(arr_ptr + i));
+    }
+    printf("\n");
+}
+
+// output
+2
+2
+0x16fdff274
+0x16fdff274
+1, 2, 3, 4, 5, 
+Program ended with exit code: 0
+```
+### 二為陣列
+```c
+#include <stdio.h>
+
+int main(int argc, const char * argv[]) {
+    int matrix[][3] = {
+        {1, 2, 3},
+        {4, 5, 6}
+    };
+    
+    // matrix[1][1] 即 *(*(matrix + 1) + 1)
+    printf("%d\n", matrix[1][1]);
+    printf("%d\n", *(*(matrix + 1) + 1));
+    
+    // &matrix[1][1] 即 *(matrix + 1) + 1 或 matrix[1] + 1
+    printf("%p\n", &matrix[1][1]);
+    printf("%p\n", *(matrix + 1) + 1);
+    printf("%p\n", matrix[1] + 1);
+    
+    int (*matrix_ptr)[3] = matrix; // 宣告二維陣列的指標
+    int* ptr1D = matrix_ptr[0]; // matrix_ptr[0] 即 matrix[0]
+    for (int i = 0; i < 6; i++) {
+        printf("%d, ", *(ptr1D + i));
+    }
+    printf("\n");
+}
+
+//output
+5
+5
+0x16fdff280
+0x16fdff280
+0x16fdff280
+1, 2, 3, 4, 5, 6, 
+Program ended with exit code: 0
+```
+### 利用函式修改陣列內容
+```c
+#include <stdio.h>
+
+void set_1Darr_val(int* arr, int size, int val) {
+    for(int i = 0; i < size; i++) {
+        arr[i] = val;
+    }
+}
+
+void set_2Darr_val(int (*arr)[3], int row, int col, int val) {
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            arr[i][j] = val;
+        }
+    }
+}
+
+int main(int argc, const char * argv[]) {
+    int arr1D[] = {1, 2, 3, 4, 5};
+    printf("Brfore: %d, %d, %d, %d, %d\n", arr1D[0], arr1D[1], arr1D[2], arr1D[3], arr1D[4]);
+    set_1Darr_val(arr1D, 5, 21);
+    printf("After: %d, %d, %d, %d, %d\n", arr1D[0], arr1D[1], arr1D[2], arr1D[3], arr1D[4]);
+    
+    int arr2D[][3] = {
+        {1, 2, 3},
+        {4, 5, 6}
+    };
+    printf("Brfore: %d, %d, %d, %d, %d, %d\n", arr2D[0][0], arr2D[0][1], arr2D[0][2], arr2D[1][0], arr2D[1][1], arr2D[1][2]);
+    set_2Darr_val(arr2D, 2, 3, 21);
+    printf("After: %d, %d, %d, %d, %d, %d\n", arr2D[0][0], arr2D[0][1], arr2D[0][2], arr2D[1][0], arr2D[1][1], arr2D[1][2]);
+}
+
+//output
+Brfore: 1, 2, 3, 4, 5
+After: 21, 21, 21, 21, 21
+Brfore: 1, 2, 3, 4, 5, 6
+After: 21, 21, 21, 21, 21, 21
+Program ended with exit code: 0
+```
+### 動態記憶體配置一維陣列
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+void set_1Darr_val(int* arr, int size, int val) {
+    for(int i = 0; i < size; i++) {
+        arr[i] = val;
+    }
+}
+
+int main(int argc, const char * argv[]) {
+    int* vector1D = (int*)malloc(sizeof(int) * 5);
+    set_1Darr_val(vector1D, 5, 9);
+    printf("%d, %d, %d, %d, %d\n", vector1D[0], vector1D[1], vector1D[2], vector1D[3], vector1D[4]);
+}
+
+//output
+9, 9, 9, 9, 9
+Program ended with exit code: 0
+```
